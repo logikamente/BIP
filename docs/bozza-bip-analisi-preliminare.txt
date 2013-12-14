@@ -1,0 +1,154 @@
+## PROGETTO BIP FOR PARTESA
+## ANALISI PRELIMINARE
+
+SOMMARIO
+1. Introduzione
+2. Requisiti hardware e software
+3. Studio del dominio
+4. Attori principali del sistema
+5. Le principali GUI del sistema
+6. Principali casi d'uso del sistema
+7. Conclusione
+
+-----------------------------------------------------------------------------------------------------------
+
+CAP. 1
+INTRODUZIONE
+
+Si richiede lo sviluppo di un' applicazione per la gestione del conto economico di un'attività ricettiva che rientra nelle seguenti categorie, identificate a scopo esemplificativo da un codice attività:
+- ristoranti (A)
+- pub (B)
+- birrerie (C)
+- bar (D)
+- disco bar (E)
+- discoteche (F)
+- enoteche (G)
+
+L'applicazione,denominata d'ora in poi BIP (Business Intelligence for Partesa), verrà utilizzata dai gestori delle sopra citate attività per monitorare l'andamento economico sulla base dei dati immessi. BIP potrà rappresentare uno strumento con il quale poter verificare in tempo reale i centri di maggior costo e, allo stesso tempo, poter intervenire su determinate categorie di spesa atte a migliorare gli incassi.
+
+-----------------------------------------------------------------------------------------------------------
+
+CAP. 2
+REQUISITI HARDWARE E SOFTWARE
+L'applicazione BIP sarà di tipo web based. Il suo utilizzo da parte dei gestori potrà avvenire grazie a collegamenti internet da qualsiasi dipositivo fisso (pc desktop) o mobile (tablet) collegati alla rete internet.
+Trattandosi di una web application verrà impiegato il paradigma client/server.
+BIP sarà sviluppato e installato su un server web ad alta prestazione e altamente affidabile (rindondante), di cui daremo specifica di seguito. I client saranno rappresentati dai dispositivi che accederanno all'applicazione server per l'utilizzo dell'applicazione BIP.
+
+Specifica del server (requisiti minimi)
+CPU: 4 Intel XEON X5650 @ 2.67GHz
+RAM: 4 GB DDR3 1.333MHz
+HD: 60 GB SAS 10K RPM in RAID 50 (alta affidabilità/ridondanza)
+IP: 1 INDIRIZZO PUBBLICO DEDICATO
+Web Server : Apache2
+DB Server: MySql
+Backup: ultimi 7 giorni (1 Full + 6 incremental)
+
+Specifica applicativo
+Linguaggio php (v. 5.3) e mysql (v. 5). Applicazione accessibile da software browser come Firefox, Internet Explorer 10.x>, Chrome o Safari. Connessione internet del client necessaria, almeno di 256Kbps (internet key o 3G).
+
+-----------------------------------------------------------------------------------------------------------
+
+CAP. 3
+STUDIO DEL DOMINIO
+L'applicazione BIP sarà raggiungibile attraverso un url pubblico, strutturato su un terzo dominio di partesa.it: bip.partesa.it. Digitando su un browser bip.partesa.it si accederà alla schermata di login dell'applicazione.
+
+-----------------------------------------------------------------------------------------------------------
+
+CAP. 4
+ATTORI PRINCIPALI DEL SISTEMA
+Si definiscono gli attori principali del sistema tutte le entità reali o virtuali che interagiscono con il sistema BIP, esso stesso attore.
+Sono attori del sistema:
+- BIP: applicativo che riceve in input i dati immessi dall'utente, gli elabora e li restituisce sotto forma di tabella o grafico. BIP mantiiene salvati i dati su database e fornisce all'utente le GUI, ovvero le interfacce grafiche del sitema (vedi CAP. 5)
+- AMMINISTRAZIONE PARTESA: definito in seguito come ADMIN, rappresenta l'entità reale che, attraverso un'interfaccia web amministrativa, attiva o disattiva l'accesso a BIP da parte dei clienti Partesa.
+- CLIENTE PARTESA: definito in seguito come UTENTE, è il reale utilizzatore di BIP. Rappresenta colui che accede all'applicaTIVO, immette i dati nel sistema e consulta statistiche, grafici o tabelle.
+
+-----------------------------------------------------------------------------------------------------------
+
+CAP. 5
+LE PRINCIPALI GUI DEL SISTEMA
+Le GUI (Graphics User Interfaces) rappresentano uno schema di come dovranno essere le future schermate del sistema. Contegono tutte le funzioni e informazioni a cui l'utente finale accede.
+Di seguito riportiamo una specifica di alcune principali GUI per il sistema BIP.
+
+5.1
+LOGIN
+Rappresenta la pagina di ingresso al sistema. L'UTENTE potrà inserire il nome utente e password forniti da Partesa e agendo sul bottone "Entra" arriverà alla pagina HOME di BIP, il quale carichè tutti i dati salvati del relativo utente.
+
+[immagine login]
+
+5.2
+HOME
+E' il cruscotto iniziale dell'UTENTE. BIP caricherà diversi pannelli chiamati dashlets, rappresentato ciascuno da un grafico o una tabella a seconda dei dati che deve restituire come risultato.
+Oltre ai dashlets, dalla home (e da qualsiasi altra futura GUI non prevista nella prima versione di rilascio) l'UTENTE sarà in grado di effettuare il logout per uscire dall'applicazione oppure accedere a "I tuoi dati" per poter passare alle successive GUI di input/modifiche dati.
+Al primissimo accesso da parte dell'UTENTE, BIP fornirà alcune GUI di wizard (passaggi guidati) che aiuteranno l'utilizzatore ad immettere i dati fondamentali per un ottimale calcolo statistico/previsionale.
+Se l'utente rimanda i passaggi di wizard, un dashlet di BIP presente in tutte le GUI informerà l'utilizzatore la percentuale di completamento del proprio profilo di dati.
+
+[immagine login]
+
+5.3
+I TUOI DATI
+Questa GUI racchiude un insieme di sotto-GUI dedicate all'immissione dei dati e alla restituzione dei risultati in tempo reale.
+La GUI principale è un'area suddivisa su tre colonne, A, B e C.
+La colonna di sinistra (A) contiene le macro voci di menu per accedere alle alle funzionalità principali, che sono:
+- Conto economico
+   - Configurazione attività
+   - Listino vendita
+   - Acquisti
+   - Costi del personale
+   - Costi di gestione
+   ...
+- Taglio del prezzo
+- Sostenibilità affitto
+- Margine aggiuntivo
+- Cambio password
+
+Sulla scelta dell'UTENTE di una delle voci della colonna di sinistra, viene attivato il contenuto nella colonna centrale (B) che conterrà una serie di campi di input (immissione) dei dati da parte dell'UTENTE.
+
+Dal momento che l'UTENTE inserisce dati in appositi campi aperti, BIP effettuerà un aggiornamento statistico in tempo su tabelle o grafici poste nella colonna di destra (C).
+
+[immagine i tuoi dati]
+
+5.4
+ATTIVAZIONE CLIENTE
+Questa GUI definisce l'interfaccia di utilizzo da parte dell'attore ADMIN che avrà il compito di attivare (o disattivare) un UTENTE nel sistema.
+ADMIN potrà assegnare due tipi di profilo, generale o avanzato.
+Per profilo generale si intende che UTENTE abbia accesso a BIP tramite credenziali proprie fornite da ADMIN, ma i dati personali e di sistema sono trattati in forma anonima da Partesa che ne trarrà vantaggio di utilizzo solo a scopo statistico territoriale: l'UTENTE a profilo generale fornirà a Partesa solo la propria provincia di attività. Contrariamente, un UTENTE che ha aderito al profilo avanzato avrà dato il consenso a Partesa per trattare i dati personali e i dati immessi nell'applicazione a fini statistici interni e che possano aiutare la stessa Partesa a comprendere l'andamento economico del proprio cliente e prospettare servizi e prodotti in momenti sucessivi.
+
+-----------------------------------------------------------------------------------------------------------
+
+CAP. 6
+PRINCIPALI CASI D'USO DEL SISTEMA
+I casi d'uso sono esempi di possibili scenari in cui gli attori del sistema interagiscono per definire una determinata funzionalità e per arrivare ad un certo tipo di risultato tramite azioni ben definite. Trattandosi di molteplici possibilità, ne elenchiamo solo alcuni a puro scopo esemplificativo.
+
+6.1
+ASSEGNAZIONE CREDENZIALI UTENTE
+Azione: ADMIN crea un nuovo UTENTE per fornire l'accesso a BIP
+Descrizione: ADMIN accederà con le proprie credenziali da amministratore ad un'area specifica di BIP dove sarà presente la GUI di ATTIVAZIONE CLIENTE. ADMIN specificherà se UTENTE avrà un profilo generale oppure avanzato.
+Se il profilo è quello generale, ADMIN inserirà solo l'indirizzo email e la provincia di attività di UTENTE  e premerà il bottone "Attiva cliente". Se, invece, il profilo è quello avanzato ADMIN inserirà dati più completi di UTENTE che vanno dalla ragione sociale, alla partita iva, città ecc., infine agirà su "Attiva cliente".
+L'azione del pulsante "Attiva cliente" scatenerà BIP ad inviare un'email, all'indirizzo di UTENTE, contenente un nome utente ed una password randomica per poter accedere al sistema su bip.partesa.it.
+
+6.2
+LOGIN UTENTE
+Azione: UTENTE vuole accedere a BIP
+Descrizione: UTENTE, dal proprio dispositivo pc o mobile avvia l'applicazione browser preferita. Sulla barra degli indirizzi digiterà: bip.partesa.it. Il browser restituirà la GUI di LOGIN dove UTENTE inserirà il proprio nome utente e la password fornite da ADMIN (vedi caso d'uso 6.1). se le credenziali sono corrette BIP presenterà a UTENTE la GUI di HOME altrimenti restituirà un messaggio di errore login.
+
+6.3
+LOGOUT UTENTE
+Azione: UTENTE vuole uscire da BIP
+Descrizione: UTENTE ha la possibilità di agire sul bottone "Logout" posizionato in tutte le GUI di BIP: gli consentirà di uscire correttamente dal sistema.
+
+6.4
+INSERIMENTO DATI SU ATTIVITA'
+Azione: UTENTE vuole inserire o modificare i giorni settimanali di apertura della sua attività
+Descrizione: UTENTE, dalla GUI di HOME, agisce sul bottone "I Tuoi dati" e BIP retituirà la GUI I TUOI DATI; da qui UTENTE agirà sul link "Configurazione attività" posto nella colonna A. Nella colonna B verranno caricati una serie di campi aperti facenti parte del gruppo "dati generali attività", tra i quali UTENTE inserirà in corrispondenza di "Giornate di apertura settimanale" il valore numerico corrispondente. Subito dopo l'immissione del dato, BIP aggiornerà tutte le statistiche presenti nella colonna C.
+
+6.5
+INSERIMENTO DATI SU LISTINO VENDITA, PREZZO BIRRA 0,4
+(caso d'uso specifico del modulo birreria)
+Azione: UTENTE vuole inserire il prezzo di vendita della birra alla spina 0,4
+Descrizione: UTENTE, dalla GUI di HOME, agirà sul bottone "I Tuoi dati" e BIP restituirà la GUI I TUOI DATI; da qui UTENTE agirà sul link "Listino di Vendita" posto sotto la voce "Conto economico" della colonna A. BIP caricherà il gruppo di campi appropriato nella colonna B, per permettere a UTENTE di inserire o modificare il dato nel campo "birra cl. 0,4". Una volta inserito, BIP aggiornerà istantaneamente tutti i dati statistici precedenti nelle tabelle e grafici della colonna C.
+
+
+
+ 
+ 
+
